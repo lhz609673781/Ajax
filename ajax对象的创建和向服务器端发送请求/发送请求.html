@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="xhr对象的创建.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		var request=createXHR();
+		if(request){
+			//get请求    服务器与客户端的状态用一个回调函数
+			request.onreadystatachange=listener;
+			//建立客户端与服务器的连接
+			request.open("GET","http://192.168.1.238:8080/test/hello.action?name=zy",true);
+			request.send(null);//发出请求，参数为空
+
+		}
+		//回调函数用于接收服务器端得响应
+
+		function listener(){
+			switch(request.readyStatus){//状态
+				case 1:
+					console.log("载入服务器页面中.....");
+					break;
+				case 2:
+					console.log("载入完成...");
+					break;
+				case 3:
+					console.log("交互....");
+					break;
+				case 4:
+					console.log("服务器响应完成....");
+					if(request.status==200){//当状态码在200的时候
+						console.log("服务器正常响应....");
+						alert(request.responseText);
+					}
+			}
+		}
+	</script>
+</body>
+</html>

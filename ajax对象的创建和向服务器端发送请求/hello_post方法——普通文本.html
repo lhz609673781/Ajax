@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>hello_post方法——普通文本</title>
+	<script type="text/javascript" src="xhr对象的创建.js"></script>
+</head>
+<body>
+	<form action="" method="post">
+		用户名:<input type="text" name="name" id="name"/><br>
+		密码:<input type="password" name="pwd" id="pwd"/><br>
+		<input type="button" value="登录" id="btn" onclick="login()"/>
+	</form>
+	<script type="text/javascript">
+		function login(){
+			var request=createXHR();
+			if(request){
+				var name=document.getElementById("name").value;
+				var password=document.getElementById("pwd").value;
+				//       服务器与客户端的状态
+				request.onreadyatatechange=listener;
+				//建立连接
+				//当使用post发送表单数据时，要加入一个请求头，这是一个表单数据
+				request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				//POST方式请求服务器时，参数拼接后放在send中，多个参之间用&连接
+				request("name="+name+" & password="+password);
+			}
+		}
+
+		//回调函数用于接收服务器端的响应
+		function listener(){
+			if(request.readyState==4&&request.status==200){
+				document.getElementById("result").innerHTML=request.responseText;
+			}
+		}
+	</script>
+	<p id="result"></p>
+</body>
+</html>
